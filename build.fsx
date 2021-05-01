@@ -608,7 +608,6 @@ Target.create "Release" ignore
 
 "DotnetRestore"
     ==> "DotnetBuild"
-    ==> "FSharpAnalyzers"
     ==> "DotnetTest"
     =?> ("GenerateCoverageReport", not disableCodeCoverage)
     ==> "CreatePackages"
