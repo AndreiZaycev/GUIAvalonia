@@ -575,7 +575,6 @@ Target.createBuildFailure "RevertChangelog" revertChangelog  // Do NOT put this 
 Target.createFinal "DeleteChangelogBackupFile" deleteChangelogBackupFile  // Do NOT put this in the dependency chain
 Target.create "DotnetBuild" dotnetBuild
 Target.create "DotnetTest" dotnetTest
-Target.create "GenerateCoverageReport" generateCoverageReport
 Target.create "WatchApp" watchApp
 Target.create "WatchTests" watchTests
 Target.create "AssemblyInfo" generateAssemblyInfo
@@ -609,7 +608,6 @@ Target.create "Release" ignore
 "DotnetRestore"
     ==> "DotnetBuild"
     ==> "DotnetTest"
-    =?> ("GenerateCoverageReport", not disableCodeCoverage)
     ==> "CreatePackages"
     ==> "GitRelease"
     ==> "GitHubRelease"
