@@ -68,7 +68,7 @@ let distGlob =
     ++ (distDir @@ "*.tgz")
     ++ (distDir @@ "*.tar.gz")
 
-let coverageThresholdPercent = 1
+let coverageThresholdPercent = 0
 let coverageReportDir =  __SOURCE_DIRECTORY__  @@ "docs" @@ "coverage"
 
 let gitOwner = "AndreiZaycev"
@@ -574,9 +574,7 @@ Target.create "UpdateChangelog" updateChangelog
 Target.createBuildFailure "RevertChangelog" revertChangelog  // Do NOT put this in the dependency chain
 Target.createFinal "DeleteChangelogBackupFile" deleteChangelogBackupFile  // Do NOT put this in the dependency chain
 Target.create "DotnetBuild" dotnetBuild
-Target.create "FSharpAnalyzers" fsharpAnalyzers
 Target.create "DotnetTest" dotnetTest
-Target.create "GenerateCoverageReport" generateCoverageReport
 Target.create "WatchApp" watchApp
 Target.create "WatchTests" watchTests
 Target.create "AssemblyInfo" generateAssemblyInfo
@@ -609,9 +607,7 @@ Target.create "Release" ignore
 
 "DotnetRestore"
     ==> "DotnetBuild"
-    ==> "FSharpAnalyzers"
     ==> "DotnetTest"
-    =?> ("GenerateCoverageReport", not disableCodeCoverage)
     ==> "CreatePackages"
     ==> "GitRelease"
     ==> "GitHubRelease"
