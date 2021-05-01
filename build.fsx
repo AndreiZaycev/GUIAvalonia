@@ -574,7 +574,6 @@ Target.create "UpdateChangelog" updateChangelog
 Target.createBuildFailure "RevertChangelog" revertChangelog  // Do NOT put this in the dependency chain
 Target.createFinal "DeleteChangelogBackupFile" deleteChangelogBackupFile  // Do NOT put this in the dependency chain
 Target.create "DotnetBuild" dotnetBuild
-Target.create "FSharpAnalyzers" fsharpAnalyzers
 Target.create "DotnetTest" dotnetTest
 Target.create "GenerateCoverageReport" generateCoverageReport
 Target.create "WatchApp" watchApp
