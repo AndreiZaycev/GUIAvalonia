@@ -617,4 +617,3 @@ Target.create "Release" ignore
 // Target Start
 //-----------------------------------------------------------------------------
 
-Target.runOrDefaultWithArguments "CreatePackages"
