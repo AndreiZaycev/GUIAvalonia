@@ -578,7 +578,6 @@ Target.create "DotnetTest" dotnetTest
 Target.create "WatchApp" watchApp
 Target.create "WatchTests" watchTests
 Target.create "AssemblyInfo" generateAssemblyInfo
-Target.create "CreatePackages" createPackages
 Target.create "GitRelease" gitRelease
 Target.create "GitHubRelease" githubRelease
 Target.create "FormatCode" formatCode
@@ -591,7 +590,6 @@ Target.create "Release" ignore
 // Only call Clean if DotnetPack was in the call chain
 // Ensure Clean is called before DotnetRestore
 "Clean" ?=> "DotnetRestore"
-"Clean" ==> "CreatePackages"
 
 // Only call AssemblyInfo if there is a release target in the call chain
 // Ensure AssemblyInfo is called after DotnetRestore and before DotnetBuild
@@ -608,7 +606,6 @@ Target.create "Release" ignore
 "DotnetRestore"
     ==> "DotnetBuild"
     ==> "DotnetTest"
-    ==> "CreatePackages"
     ==> "GitRelease"
     ==> "GitHubRelease"
     ==> "Release"
