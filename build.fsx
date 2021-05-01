@@ -68,7 +68,7 @@ let distGlob =
     ++ (distDir @@ "*.tgz")
     ++ (distDir @@ "*.tar.gz")
 
-let coverageThresholdPercent = 1
+let coverageThresholdPercent = 0
 let coverageReportDir =  __SOURCE_DIRECTORY__  @@ "docs" @@ "coverage"
 
 let gitOwner = "AndreiZaycev"
@@ -574,13 +574,10 @@ Target.create "UpdateChangelog" updateChangelog
 Target.createBuildFailure "RevertChangelog" revertChangelog  // Do NOT put this in the dependency chain
 Target.createFinal "DeleteChangelogBackupFile" deleteChangelogBackupFile  // Do NOT put this in the dependency chain
 Target.create "DotnetBuild" dotnetBuild
-Target.create "FSharpAnalyzers" fsharpAnalyzers
 Target.create "DotnetTest" dotnetTest
-Target.create "GenerateCoverageReport" generateCoverageReport
 Target.create "WatchApp" watchApp
 Target.create "WatchTests" watchTests
 Target.create "AssemblyInfo" generateAssemblyInfo
-Target.create "CreatePackages" createPackages
 Target.create "GitRelease" gitRelease
 Target.create "GitHubRelease" githubRelease
 Target.create "FormatCode" formatCode
@@ -593,7 +590,6 @@ Target.create "Release" ignore
 // Only call Clean if DotnetPack was in the call chain
 // Ensure Clean is called before DotnetRestore
 "Clean" ?=> "DotnetRestore"
-"Clean" ==> "CreatePackages"
 
 // Only call AssemblyInfo if there is a release target in the call chain
 // Ensure AssemblyInfo is called after DotnetRestore and before DotnetBuild
@@ -609,10 +605,7 @@ Target.create "Release" ignore
 
 "DotnetRestore"
     ==> "DotnetBuild"
-    ==> "FSharpAnalyzers"
     ==> "DotnetTest"
-    =?> ("GenerateCoverageReport", not disableCodeCoverage)
-    ==> "CreatePackages"
     ==> "GitRelease"
     ==> "GitHubRelease"
     ==> "Release"
@@ -624,4 +617,3 @@ Target.create "Release" ignore
 // Target Start
 //-----------------------------------------------------------------------------
 
-Target.runOrDefaultWithArguments "CreatePackages"
